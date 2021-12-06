@@ -1,19 +1,13 @@
-import functions
-
 filename = 'input.txt'
 
 
 def task1():
-    data = functions.read_file_to_list(filename, str)
-
     answer = 0
 
     print("\tAnswer: ", answer)
 
 
 def task2():
-    data = functions.read_file_to_list(filename, str)
-
     answer = 0
 
     print("\tAnswer: ", answer)
