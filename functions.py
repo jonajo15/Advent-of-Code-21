@@ -3,10 +3,9 @@ def read_file_to_list(filename, _type):
         return [_type(line.rstrip()) for line in file.readlines()]
 
 
-def read_line_by_line(filename):
+def read_line_to_list(filename, _type):
     with open(filename) as file:
-        for line in file:
-            print(line.rstrip())
+        return [_type(number) for number in file.readline().split(',')]
 
 
 def find(lst, key, value, _default=None):

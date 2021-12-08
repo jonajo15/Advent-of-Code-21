@@ -1,9 +1,80 @@
-filename = 'input.txt'
+from dataclasses import dataclass
+filename = 'days/4/input.txt'
 
 
 def read_file_to_list(_type):
     with open(filename) as file:
         return [_type(line.rstrip()) for line in file.readlines()]
+
+
+WIDTH = HEIGHT = 5
+
+
+@dataclass
+class Board:
+    board: list
+    marked: set
+
+    def __init__(self, board):
+        self.board = list()
+        self.marked = set()
+
+        for r in board:
+            self.board += [int(v) for v in r.split(' ') if v != '']
+
+    def find(self, number):
+        try:
+            index = self.board.index(number)
+
+            return index // WIDTH, index % WIDTH
+        except ValueError:
+            return None
+
+    def sum_of_rest(self):
+        return sum([int(self.board[i]) for i in range(len(self.board)) if (i // WIDTH, i % WIDTH) not in self.marked])
+
+    def set_marker(self, number):
+        coord = self.find(number)
+
+        if not coord:
+            return None
+
+        x, y = coord
+
+        self.marked.add(coord)
+
+        # check win
+        rows = ((x, c) for c in range(WIDTH))
+        cols = ((r, y) for r in range(HEIGHT))
+
+        return all((p in self.marked) for p in rows) or all((p in self.marked) for p in cols)
+
+
+def task1():
+    data = read_file_to_list(str)
+    order = [int(v) for v in data[0].split(',')]
+    input_boards = list(filter(lambda v: v != '', data[1:]))
+
+    boards = []
+    for i in range(0, len(input_boards), 5):
+        boards.append(Board(input_boards[i:i+5]))
+
+    answer = 0
+
+    for number in order:
+        for board in boards:
+            won = board.set_marker(number)
+
+            if won:
+                rest_sum = board.sum_of_rest()
+                answer = rest_sum * number
+
+                break
+        else:
+            continue
+        break
+
+    print("\tAnswer: ", answer)
 
 
 def find_number_on_board(board, n):
@@ -56,39 +127,6 @@ def get_boards(data):
     return boards, results
 
 
-def task1():
-    data = read_file_to_list(str)
-    order = [int(x) for x in data[0].split(',')]
-
-    boards, results = get_boards(data)
-
-    win_sum = 0
-    count = 0
-    number = 0
-
-    while win_sum == 0:
-        number = order[count]
-        for b in range(len(boards)):
-            x, y = find_number_on_board(boards[b], number)
-
-            # number not found
-            if x == y == -1:
-                continue
-
-            results[b][x][y] = number
-
-            win_sum = check_win(results[b], x, y, boards[b])
-
-            if win_sum > 0:
-                break
-
-        count += 1
-
-    answer = win_sum * number
-
-    print("\tAnswer: ", answer)
-
-
 def task2():
     data = read_file_to_list(str)
     order = [int(x) for x in data[0].split(',')]
@@ -128,6 +166,7 @@ def task2():
     print("\tAnswer: ", answer)
 
 
+# under construction
 if __name__ == '__main__':
     print("========== Task 1 ==========")
     task1()
