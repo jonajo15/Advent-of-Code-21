@@ -1,11 +1,11 @@
-from collections import defaultdict
 import functions
+from collections import defaultdict
 
 filename = 'input.txt'
 
 
 def task1():
-    data = functions.read_file_to_list(filename, str)
+    _input = functions.read_file_to_list(filename, str)
 
     answer = 0
 
@@ -13,7 +13,7 @@ def task1():
 
 
 def task2():
-    data = functions.read_file_to_list(filename, str)
+    _input = functions.read_file_to_list(filename, str)
 
     answer = 0
 
