@@ -2,7 +2,7 @@ from collections import defaultdict
 
 import functions
 
-filename = 'input.txt'
+filename = 'days/13/input.txt'
 
 
 def task1():

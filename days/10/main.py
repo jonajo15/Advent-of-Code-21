@@ -2,7 +2,7 @@ from collections import defaultdict
 
 import functions
 
-filename = 'input.txt'
+filename = 'days/10/input.txt'
 
 openers = "([{<"
 
