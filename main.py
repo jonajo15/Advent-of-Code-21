@@ -1,5 +1,6 @@
-import functions
 from collections import defaultdict
+
+import functions
 
 filename = 'input.txt'
 
